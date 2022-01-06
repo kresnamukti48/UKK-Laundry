@@ -47,7 +47,7 @@ class BasicController extends Controller
         User::create([
             'name' => $request->name,
             'last_name' => $request->last_name,
-            'email' => $request->email,
+            'username' => $request->username,
             'password' => Hash::make($request->password)
         ]);
 
@@ -88,7 +88,7 @@ class BasicController extends Controller
      */
     public function update(EditUserRequest $request, User $basic)
     {
-        if($request->filled('password')) {
+        if ($request->filled('password')) {
             $basic->password = Hash::make($request->password);
         }
         $basic->name = $request->name;

@@ -65,6 +65,22 @@
             </a>
         </li>
 
+                <!-- Nav Item - Member -->
+                <li class="nav-item {{ Nav::isRoute('member.index') }}">
+                    <a class="nav-link" href="{{ route('member.index') }}">
+                        <i class="fas fa-fw fa-plus"></i>
+                        <span>{{ __('Member CRUD') }}</span>
+                    </a>
+                </li>
+
+                <!-- Nav Item - Paket -->
+                <li class="nav-item {{ Nav::isRoute('paket.index') }}">
+                    <a class="nav-link" href="{{ route('paket.index') }}">
+                        <i class="fas fa-fw fa-plus"></i>
+                        <span>{{ __('Paket CRUD') }}</span>
+                    </a>
+                </li>
+
         <!-- Nav Item - Profile -->
         <li class="nav-item {{ Nav::isRoute('profile') }}">
             <a class="nav-link" href="{{ route('profile') }}">
@@ -81,13 +97,6 @@
             </a>
         </li>
 
-        <!-- Nav Item -->
-        <li class="nav-item {{ Nav::isRoute('blank') }}">
-            <a class="nav-link" href="{{ route('blank') }}">
-                <i class="fas fa-fw fa-book"></i>
-                <span>{{ __('Blank Page') }}</span>
-            </a>
-        </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">

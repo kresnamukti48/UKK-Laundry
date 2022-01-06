@@ -26,10 +26,9 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/blank', function () {
-    return view('blank');
-})->name('blank');
+Route::resource('member', MemberController::class);
+Route::resource('paket', PaketController::class);
 
-Route::middleware('auth')->group(function() {
+Route::middleware('auth')->group(function () {
     Route::resource('basic', BasicController::class);
 });
