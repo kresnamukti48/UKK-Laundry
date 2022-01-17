@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddUserRequest;
 use App\Http\Requests\EditUserRequest;
 use App\User;
+use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,7 +19,6 @@ class BasicController extends Controller
     public function index()
     {
         return view('basic.list', [
-            'title' => 'Basic CRUD',
             'users' => User::paginate(10)
         ]);
     }
@@ -44,12 +44,13 @@ class BasicController extends Controller
      */
     public function store(AddUserRequest $request)
     {
-        User::create([
+        $user = User::create([
             'name' => $request->name,
-            'last_name' => $request->last_name,
             'username' => $request->username,
             'password' => Hash::make($request->password)
         ]);
+
+        $user->syncRoles(Role::ROLE_KASIR);
 
         return redirect()->route('basic.index')->with('message', 'User added successfully!');
     }
@@ -92,8 +93,7 @@ class BasicController extends Controller
             $basic->password = Hash::make($request->password);
         }
         $basic->name = $request->name;
-        $basic->last_name = $request->last_name;
-        $basic->email = $request->email;
+        $basic->username = $request->username;
         $basic->save();
 
         return redirect()->route('basic.index')->with('message', 'User updated successfully!');

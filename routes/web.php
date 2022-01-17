@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use app\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +27,12 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::resource('member', MemberController::class);
-Route::resource('paket', PaketController::class);
-
 Route::middleware('auth')->group(function () {
     Route::resource('basic', BasicController::class);
 });
+
+
+Route::resource('member', MemberController::class);
+Route::resource('paket', PaketController::class);
+Route::resource('transaksi', TransaksiController::class);
+Route::post('export', 'TransaksiController@export');

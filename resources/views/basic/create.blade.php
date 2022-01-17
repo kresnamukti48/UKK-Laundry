@@ -19,18 +19,11 @@
                   @enderror
                 </div>
 
-                <div class="form-group">
-                  <label for="last_name">Last Name</label>
-                  <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" id="last_name" placeholder="Last name" autocomplete="off" value="{{ old('last_name') }}">
-                  @error('last_name')
-                    <span class="text-danger">{{ $message }}</span>
-                  @enderror
-                </div>
 
                 <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Email" autocomplete="off" value="{{ old('email') }}">
-                  @error('email')
+                  <label for="username">Username</label>
+                  <input type="username" class="form-control @error('username') is-invalid @enderror" name="username" id="username" placeholder="Username" autocomplete="off" value="{{ old('username') }}">
+                  @error('username')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>

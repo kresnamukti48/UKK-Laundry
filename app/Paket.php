@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Paket extends Model
 {
-    protected $fillable = ['jenis'];
+    protected $fillable = ['jenis', 'harga'];
     use HasFactory;
 }

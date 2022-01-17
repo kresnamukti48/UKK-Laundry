@@ -14,6 +14,7 @@
 
 
                 <div class="form-group">
+                    <label for="jenis">Jarga</label>
                     <select class="form-control @error('jenis') is-invalid @enderror" name="jenis" id="jenis" placeholder="Jenis Kelamin" autocomplete="off" value="{{ old('jenis') ?? $paket->jenis }}">
                         <option value="">-Pilih-</option>
                         <option value="Kiloan">Kiloan</option>

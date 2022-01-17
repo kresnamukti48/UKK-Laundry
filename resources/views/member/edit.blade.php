@@ -30,11 +30,15 @@
 
                 <div class="form-group">
                   <label for="jenis_kelamin">Jenis Kelamin</label>
-                  <input type="text" class="form-control @error('jenis_kelamin') is-invalid @enderror" name="jenis_kelamin" id="jenis_kelamin" placeholder="Jenis Kelamin" autocomplete="off" value="{{ old('jenis_kelamin') ?? $member->jenis_kelamin }}">
-                  @error('jenis_kelamin')
+                  <select class="form-control @error('jenis_kelamin') is-invalid @enderror" name="jenis_kelamin" id="jenis_kelamin" placeholder="Jenis Kelamin" autocomplete="off" value="{{ old('jenis_kelamin') ?? $member->jenis_kelamin }}">
+                    <option value="">-Pilih-</option>
+                    <option value="Laki-Laki">Laki-Laki</option>
+                    <option value="Perempuan">Perempuan</option>
+              </select>
+                  @error('jenis')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
-                </div>
+            </div>
 
                 <div class="form-group">
                   <label for="tlp">Telepon</label>

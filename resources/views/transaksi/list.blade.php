@@ -2,11 +2,11 @@
 
 @section('main-content')
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('User CRUD') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Transaksi') }}</h1>
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('basic.create') }}" class="btn btn-primary mb-3">New User</a>
+    <a href="{{ route('transaksi.create') }}" class="btn btn-primary mb-3">New Transaksi</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -18,21 +18,32 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Nama</th>
-                <th>Username</th>
-                <th></th>
+                <th>Nama Member</th>
+                <th>Tanggal Transaksi</th>
+                <th>Batas Waktu Pengambilan</th>
+                <th>Tanggal Bayar</th>
+                <th>Status</th>
+                <th>Pembayaran</th>
+                <th>Nama Kasir</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($users as $user)
+            @foreach ($transaksis as $transaksi)
                 <tr>
                     <td scope="row">{{ $loop->iteration }}</td>
-                    <td>{{ $user->full_name }}</td>
-                    <td>{{ $user->username }}</td>
+                    <td>{{ $transaksi->id_member->nama }}</td>
+                    <td>{{ $transaksi->tgl }}</td>
+                    <td>{{ $transaksi->batas_waktu }}</td>
+                    <td>{{ $transaksi->tgl_bayar }}</td>
+                    <td>{{ $transaksi->status }}</td>
+                    <td>{{ $transaksi->dibayar }}</td>
+                    <td>{{ $transaksi->id_user->name }}</td>
                     <td>
                         <div class="d-flex">
-                            <a href="{{ route('basic.edit', $user->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
-                            <form action="{{ route('basic.destroy', $user->id) }}" method="post">
+                            <a href="{{ route('transaksi.edit', $transaksi->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
+                            <a href="{{ route('transaksi.detail', $transaksi->id) }}" class="btn btn-sm btn-primary mr-2">Detail</a>
+                            <form action="{{ route('transaksi.destroy', $transaksi->id) }}" method="post">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this?')">Delete</button>
@@ -43,9 +54,6 @@
             @endforeach
         </tbody>
     </table>
-
-    {{ $users->links() }}
-
     <!-- End of Main Content -->
 @endsection
 
