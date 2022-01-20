@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\seeds;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Role;
@@ -14,16 +14,12 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        Role::create([
+        Role::firstOrCreate([
             'name' => Role::ROLE_ADMIN,
         ]);
 
-        Role::create([
+        Role::firstOrCreate([
             'name' => Role::ROLE_KASIR,
-        ]);
-
-        Role::create([
-            'name' => Role::ROLE_USER,
         ]);
     }
 }

@@ -13,13 +13,13 @@
 
                 <div class="form-group">
                   <label for="nama">Nama Member</label>
-                  <select name="member_id" class="form-control" @error('member_id') is-invalid @enderror name="member_id" id="member_id">
+                  <select name="id_member" class="form-control" @error('id_member') is-invalid @enderror name="id_member" id="id_member">
                     <option value=""> -Pilih- </option>
                     @foreach ($members as $item)
-                    <option value="{{$item->id}}"{{old('member_id') == $item->id ? 'selected' : null}}>{{$item->nama}}</option>
+                    <option value="{{$item->id}}"{{old('id_member') == $item->id ? 'selected' : null}}>{{$item->nama}}</option>
                     @endforeach
                   </select>
-                  @error('member_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                  @error('id_member')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
 
 
@@ -39,13 +39,6 @@
                   @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="tgl_bayar">Tanggal Bayar</label>
-                    <input type="date" class="form-control @error('tgl_bayar') is-invalid @enderror" name="tgl_bayar" id="tgl_bayar" placeholder="Tanggal Bayar" autocomplete="off" value="{{ old('tgl_bayar') }}">
-                    @error('tgl_bayar')
-                      <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                  </div>
 
                 <div class="form-group">
                   <label for="status">Status</label>

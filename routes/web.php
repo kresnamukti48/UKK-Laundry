@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\DetailTransaksiController;
 use Illuminate\Support\Facades\Route;
-use app\Role;
+use App\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +29,14 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('basic', BasicController::class);
+    Route::get('basic/create_kasir', 'BasicController@create_kasir')->name('basic.create_kasir')->middleware(['role:' . Role::ROLE_ADMIN]);
+    Route::post('basic/store_kasir', 'BasicController@store_kasir')->name('basic.store_kasir')->middleware(['role:' . Role::ROLE_ADMIN]);
+    Route::resource('basic', BasicController::class)->middleware(['role:' . Role::ROLE_ADMIN]);
+    Route::resource('member', MemberController::class)->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
+    Route::resource('paket', PaketController::class)->middleware(['role:' . Role::ROLE_ADMIN]);
+    Route::get('transaksi/export', 'TransaksiController@export')->name('transaksi.export')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
+    Route::get('transaksi/create_detail', 'TransaksiController@create_detail')->name('transaksi.create_detail')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
+    Route::post('transaksi/store_detail', 'TransaksiController@store_detail')->name('transaksi.store_detail')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
+    Route::post('transaksi/store_detail', 'TransaksiController@store_detail')->name('transaksi.store_detail')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
+    Route::resource('transaksi', TransaksiController::class)->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
 });
-
-
-Route::resource('member', MemberController::class);
-Route::resource('paket', PaketController::class);
-Route::resource('transaksi', TransaksiController::class);
-Route::post('export', 'TransaksiController@export');

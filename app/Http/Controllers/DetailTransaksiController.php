@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\DetailTransaksi;
+use App\Paket;
+use App\Transaksi;
 use Illuminate\Http\Request;
 
 class DetailTransaksiController extends Controller
@@ -14,7 +16,10 @@ class DetailTransaksiController extends Controller
      */
     public function index()
     {
-        //
+        $details = DetailTransaksi::all();
+        $transaksis = Transaksi::all();
+        $pakets = Paket::all();
+        return view('transaksi.detail', DetailTransaksi::where('id_transaksi')->with(['transaksis', 'pakets'])->paginate(5));
     }
 
     /**
@@ -24,7 +29,6 @@ class DetailTransaksiController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**

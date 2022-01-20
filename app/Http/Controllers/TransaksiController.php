@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\DetailTransaksi;
 use App\Exports\TransaksiExport;
 use App\Member;
+use App\Paket;
 use App\Transaksi;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -45,23 +47,27 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $request->validate([
             'id_member' => 'required|exists:members,id',
             'tgl' => 'required|date',
+            'lama_pengerjaan' => 'required',
             'status' => 'required',
             'dibayar' => 'required',
         ]);
 
-        $tgl_transaksi = date_create($request->tgl);
-        date_add($tgl_transaksi, date_interval_create_from_date_string($request->lama_pengerjaan . " days"));
-        $batas_waktu = date_format($tgl_transaksi, 'Y-m-d');
+
+        $tgl_transaksi = Carbon::createFromFormat('Y-m-d', $request->tgl);
+        $batas_waktu = $tgl_transaksi->addDays($request->lama_pengerjaan);
 
         $transaksi = new Transaksi();
 
         $transaksi->id_member = $request->id_member;
+        $transaksi->lama_pengerjaan = $request->lama_pengerjaan;
         $transaksi->tgl = $request->tgl;
-        $transaksi->batas_waktu = $batas_waktu;
-        $transaksi->tgl_bayar = $request->tgl_bayar;
+        $transaksi->batas_waktu = $batas_waktu->format('Y-m-d');
+        $transaksi->tgl_bayar = $request->dibayar == 'dibayar' ? now() : null;
         $transaksi->status = $request->status;
         $transaksi->dibayar = $request->dibayar;
         $transaksi->id_user = Auth::id();
@@ -79,7 +85,10 @@ class TransaksiController extends Controller
      */
     public function show($id)
     {
-        //
+        $details = DetailTransaksi::all();
+        $transaksis = Transaksi::all();
+        $pakets = Paket::all();
+        return view('transaksi.detail', compact('details', 'transaksis', 'pakets'));
     }
 
     /**
@@ -104,24 +113,17 @@ class TransaksiController extends Controller
     {
         $transaksi = Transaksi::findorfail($id);
         $request->validate([
-            'id_member' => 'required|exists:members,id',
-            'tgl' => 'required|date',
-            'batas_waktu' => 'required|date',
-            'tgl_bayar' => 'required|date',
             'status' => 'required',
             'dibayar' => 'required',
-            'id_user' => 'required|exists:users,id',
         ]);
 
-        $transaksi->id_member = $request->id_member;
-        $transaksi->tgl = $request->tgl;
-        $transaksi->batas_waktu = $request->batas_waktu;
-        $transaksi->tgl_bayar = $request->tgl_bayar;
+        $transaksi->tgl_bayar = $request->dibayar == 'dibayar' ? now() : null;
         $transaksi->status = $request->status;
         $transaksi->dibayar = $request->dibayar;
-        $transaksi->id_user = $request->id_user;
 
         $transaksi->save();
+
+        return redirect()->route('transaksi.index')->with('message', 'Transaksi update successfully!');
     }
 
     /**
@@ -135,18 +137,39 @@ class TransaksiController extends Controller
         $transaksi = Transaksi::findorFail($id);
         $transaksi->delete();
 
-        return redirect()->route('transaksi.index')->with('message', 'Transaksi deleted successfully!');
+        return redirect()->route('transaksi.index',)->with('message', 'Transaksi deleted successfully!');
     }
 
-    public function detail($id)
-    {
-        $detailtransaksis = DetailTransaksi::all();
-        return view('transaksi.detail', compact('detailtransaksis'));
-    }
+
 
     public function export(Request $request)
     {
-        $transaksi = Transaksi::all();
-        $data = Excel::raw(new TransaksiExport($transaksi), \Maatwebsite\Excel\Excel::XLSX);
+        $data = Transaksi::all();
+        return Excel::download(new TransaksiExport($data), 'transaksi.xlsx');
+    }
+
+    public function create_detail()
+    {
+        $transaksis = Transaksi::all();
+        $pakets = Paket::orderBy('jenis')->get();
+        return view('transaksi.createdetail', compact('transaksis', 'pakets'));
+    }
+
+    public function store_detail(Request $request)
+    {
+        $request->validate([
+            'id_transaksi' => 'required|exists:transaksis,id',
+            'id_paket' => 'required|exists:pakets,id',
+            'qty' => 'required',
+
+        ]);
+
+        $detailtransaksi = new DetailTransaksi();
+
+        $detailtransaksi->id_transaksi = $request->id_transaksi;
+        $detailtransaksi->id_paket = $request->id_paket;
+        $detailtransaksi->qty = $request->qty;
+
+        return redirect()->route('transaksi.show')->with('message', 'Detail Added successfully!');
     }
 }

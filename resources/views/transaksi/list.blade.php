@@ -7,6 +7,7 @@
     <!-- Main Content goes here -->
 
     <a href="{{ route('transaksi.create') }}" class="btn btn-primary mb-3">New Transaksi</a>
+    <a href="{{ route('transaksi.export') }}" class="btn btn-success mb-3">Export</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -32,17 +33,17 @@
             @foreach ($transaksis as $transaksi)
                 <tr>
                     <td scope="row">{{ $loop->iteration }}</td>
-                    <td>{{ $transaksi->id_member->nama }}</td>
+                    <td>{{ $transaksi->member->nama }}</td>
                     <td>{{ $transaksi->tgl }}</td>
                     <td>{{ $transaksi->batas_waktu }}</td>
                     <td>{{ $transaksi->tgl_bayar }}</td>
                     <td>{{ $transaksi->status }}</td>
                     <td>{{ $transaksi->dibayar }}</td>
-                    <td>{{ $transaksi->id_user->name }}</td>
+                    <td>{{ $transaksi->user->name }}</td>
                     <td>
                         <div class="d-flex">
                             <a href="{{ route('transaksi.edit', $transaksi->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
-                            <a href="{{ route('transaksi.detail', $transaksi->id) }}" class="btn btn-sm btn-primary mr-2">Detail</a>
+                            <a href="{{ route('transaksi.show', $transaksi->id) }}" class="btn btn-sm btn-primary mr-2">Detail</a>
                             <form action="{{ route('transaksi.destroy', $transaksi->id) }}" method="post">
                                 @csrf
                                 @method('delete')

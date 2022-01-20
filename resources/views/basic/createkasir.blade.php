@@ -8,18 +8,33 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('basic.update', $user->id) }}" method="post">
+            <form action="{{ route('basic.store_kasir') }}" method="post">
                 @csrf
-                @method('put')
 
                 <div class="form-group">
-                  <label for="name">Nama</label>
-                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="First name" autocomplete="off" value="{{ old('name') ?? $user->name }}">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="First name" autocomplete="off" value="{{ old('name') }}">
                   @error('name')
                     <span class="text-danger">{{ $message }}</span>
                   @enderror
                 </div>
 
+
+                <div class="form-group">
+                  <label for="username">Username</label>
+                  <input type="username" class="form-control @error('username') is-invalid @enderror" name="username" id="username" placeholder="Username" autocomplete="off" value="{{ old('username') }}">
+                  @error('username')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
+                </div>
+
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="Password" autocomplete="off">
+                  @error('password')
+                    <span class="text-danger">{{ $message }}</span>
+                  @enderror
+                </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>
                 <a href="{{ route('basic.index') }}" class="btn btn-default">Back to list</a>

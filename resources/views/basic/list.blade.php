@@ -6,7 +6,9 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('basic.create') }}" class="btn btn-primary mb-3">New User</a>
+    <a href="{{ route('basic.create') }}" class="btn btn-primary mb-3">New Admin</a>
+    <a href="{{ route('basic.create_kasir') }}" class="btn btn-primary mb-3">New Kasir</a>
+
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -20,6 +22,8 @@
                 <th>No</th>
                 <th>Nama</th>
                 <th>Username</th>
+                <th>Role</th>
+
                 <th></th>
             </tr>
         </thead>
@@ -29,6 +33,7 @@
                     <td scope="row">{{ $loop->iteration }}</td>
                     <td>{{ $user->full_name }}</td>
                     <td>{{ $user->username }}</td>
+                    <td>{{ $user->getRoleNames()->implode(', ') }}</td>
                     <td>
                         <div class="d-flex">
                             <a href="{{ route('basic.edit', $user->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>

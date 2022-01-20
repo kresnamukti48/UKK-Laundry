@@ -19,7 +19,7 @@ class BasicController extends Controller
     public function index()
     {
         return view('basic.list', [
-            'users' => User::paginate(10)
+            'users' => User::with('roles')->paginate(10)
         ]);
     }
 
@@ -42,7 +42,7 @@ class BasicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddUserRequest $request)
+    public function store(Request $request)
     {
         $user = User::create([
             'name' => $request->name,
@@ -51,6 +51,9 @@ class BasicController extends Controller
         ]);
 
         $user->syncRoles(Role::ROLE_KASIR);
+
+
+
 
         return redirect()->route('basic.index')->with('message', 'User added successfully!');
     }
@@ -87,13 +90,14 @@ class BasicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditUserRequest $request, User $basic)
+    public function update(Request $request, $id)
     {
-        if ($request->filled('password')) {
-            $basic->password = Hash::make($request->password);
-        }
+        $basic = User::findorfail($id);
+        $request->validate([
+            'name' => 'required',
+        ]);
+
         $basic->name = $request->name;
-        $basic->username = $request->username;
         $basic->save();
 
         return redirect()->route('basic.index')->with('message', 'User updated successfully!');
@@ -110,5 +114,23 @@ class BasicController extends Controller
         $basic->delete();
 
         return redirect()->route('basic.index')->with('message', 'User deleted successfully!');
+    }
+
+    public function create_kasir()
+    {
+        return view('basic.createkasir');
+    }
+
+    public function store_kasir(Request $request)
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'username' => $request->username,
+            'password' => Hash::make($request->password)
+        ]);
+
+        $user->syncRoles(Role::ROLE_KASIR);
+
+        return redirect()->route('basic.index')->with('message', 'User added successfully!');
     }
 }

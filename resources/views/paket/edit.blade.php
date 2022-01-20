@@ -15,12 +15,12 @@
 
                 <div class="form-group">
                     <label for="jenis">Jarga</label>
-                    <select class="form-control @error('jenis') is-invalid @enderror" name="jenis" id="jenis" placeholder="Jenis Kelamin" autocomplete="off" value="{{ old('jenis') ?? $paket->jenis }}">
+                    <select class="form-control @error('jenis') is-invalid @enderror" name="jenis" id="jenis" placeholder="Jenis" autocomplete="off" >
                         <option value="">-Pilih-</option>
-                        <option value="Kiloan">Kiloan</option>
-                        <option value="Selimut">Selimut</option>
-                        <option value="Bed_Cover">Bed Cover</option>
-                        <option value="Kaos">Kaos</option>
+                        <option value="Kiloan" {{ old('jenis', $paket->jenis) == 'Kiloan' ? 'selected' : null }}>Kiloan</option>
+                        <option value="Selimut" {{ old('jenis', $paket->jenis) == 'Selimut' ? 'selected' : null }}>Selimut</option>
+                        <option value="Bed_Cover" {{ old('jenis', $paket->jenis) == 'Bed_Cover' ? 'selected' : null }}>Bed Cover</option>
+                        <option value="Kaos" {{ old('jenis', $paket->jenis) == 'Kaos' ? 'selected' : null }}>Kaos</option>
                   </select>
                       @error('jenis')
                         <span class="text-danger">{{ $message }}</span>

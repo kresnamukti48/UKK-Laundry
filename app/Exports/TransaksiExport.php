@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
@@ -38,10 +39,10 @@ class TransaksiExport implements FromCollection, WithMapping, WithHeadings, Shou
         return [
             ++$this->rowNumber,
             $transaksi->member->nama,
-            Date::dateTimeToExcel($transaksi->tgl),
+            Date::dateTimeToExcel(Carbon::createFromFormat('Y-m-d', $transaksi->tgl)),
             $transaksi->lama_pengerjaan,
-            Date::dateTimeToExcel($transaksi->batas_waktu),
-            Date::dateTimeToExcel($transaksi->tgl_bayar),
+            Date::dateTimeToExcel(Carbon::createFromFormat('Y-m-d', $transaksi->batas_waktu)),
+            Date::dateTimeToExcel(Carbon::createFromFormat('Y-m-d', $transaksi->tgl_bayar)),
             $transaksi->status,
             $transaksi->dibayar,
             $transaksi->user->name,
