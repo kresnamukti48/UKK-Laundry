@@ -21,5 +21,9 @@ class RoleSeeder extends Seeder
         Role::firstOrCreate([
             'name' => Role::ROLE_KASIR,
         ]);
+
+        Role::firstOrCreate([
+            'name' => Role::ROLE_OWNER,
+        ]);
     }
 }

@@ -133,4 +133,22 @@ class BasicController extends Controller
 
         return redirect()->route('basic.index')->with('message', 'User added successfully!');
     }
+
+    public function create_owner()
+    {
+        return view('basic.createowner');
+    }
+
+    public function store_owner(Request $request)
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'username' => $request->username,
+            'password' => Hash::make($request->password)
+        ]);
+
+        $user->syncRoles(Role::ROLE_OWNER);
+
+        return redirect()->route('basic.index')->with('message', 'User added successfully!');
+    }
 }

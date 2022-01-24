@@ -8,6 +8,8 @@
 
     <a href="{{ route('basic.create') }}" class="btn btn-primary mb-3">New Admin</a>
     <a href="{{ route('basic.create_kasir') }}" class="btn btn-primary mb-3">New Kasir</a>
+    <a href="{{ route('basic.create_owner') }}" class="btn btn-primary mb-3">New Owner</a>
+
 
 
     @if (session('message'))

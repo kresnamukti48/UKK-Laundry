@@ -16,10 +16,6 @@ class DetailTransaksiController extends Controller
      */
     public function index()
     {
-        $details = DetailTransaksi::all();
-        $transaksis = Transaksi::all();
-        $pakets = Paket::all();
-        return view('transaksi.detail', DetailTransaksi::where('id_transaksi')->with(['transaksis', 'pakets'])->paginate(5));
     }
 
     /**
@@ -29,6 +25,9 @@ class DetailTransaksiController extends Controller
      */
     public function create()
     {
+        $transaksis = Transaksi::all();
+        $pakets = Paket::orderBy('jenis')->get();
+        return view('transaksi.createdetail', compact('transaksis', 'pakets'));
     }
 
     /**
@@ -72,7 +71,7 @@ class DetailTransaksiController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('transaksi.editdetail', compact('detailtransaksi'));
     }
 
     /**
@@ -84,7 +83,19 @@ class DetailTransaksiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $detailtransaksi = DetailTransaksi::findorFail($id);
+        $request->validate([
+            'id_paket' => 'required|exists:pakets,id',
+            'qty' => 'required',
+
+        ]);
+
+        $detailtransaksi->id_paket = $request->id_paket;
+        $detailtransaksi->qty = $request->qty;
+
+        $detailtransaksi->save();
+
+        return redirect()->back()->with('message', 'Detail Updated successfully!');
     }
 
     /**
@@ -95,6 +106,9 @@ class DetailTransaksiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $detailtransaksi = DetailTransaksi::findorFail($id);
+        $detailtransaksi->delete();
+
+        return redirect()->back()->with('message', 'Detail Deleted successfully!');
     }
 }

@@ -19,4 +19,15 @@ class DetailTransaksi extends Model
     {
         return $this->belongsTo(Paket::class, 'id_paket');
     }
+
+    public function jumlah()
+    {
+        $jumlah = $this->paket();
+        $qty = DetailTransaksi::all();
+        $harga = $jumlah->sum('harga');
+        $qty1 = $qty->sum('qty');
+        $total_harga = $harga * $qty1;
+
+        return $total_harga;
+    }
 }

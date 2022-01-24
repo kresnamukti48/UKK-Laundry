@@ -40,8 +40,6 @@
                 </div>
 
 
-
-
                 <button type="submit" class="btn btn-primary">Save</button>
                 <a href="{{ route('member.index') }}" class="btn btn-default">Back to list</a>
 

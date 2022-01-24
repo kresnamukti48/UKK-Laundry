@@ -11,4 +11,5 @@ class Role extends ModelsRole
 
     public const ROLE_ADMIN = 'Admin';
     public const ROLE_KASIR = 'Kasir';
+    public const ROLE_OWNER = 'Owner';
 }

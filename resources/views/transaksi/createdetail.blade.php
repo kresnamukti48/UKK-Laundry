@@ -33,17 +33,6 @@
                   @error('id_paket')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
 
-                <div class="form-group">
-                  <label for="paket">Harga Paket</label>
-                  <select name="id_paket" class="form-control" @error('id_paket') is-invalid @enderror>
-                    <option value=""> -Pilih- </option>
-                    @foreach ($pakets as $item)
-                    <option value="{{$item->id}}"{{old('id_paket') == $item->id ? 'selected' : null}}>{{$item->harga}}</option>
-                    @endforeach
-                  </select>
-                  @error('id_paket')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                </div>
-
 
                 <div class="form-group">
                   <label for="qty">Jumlah</label>

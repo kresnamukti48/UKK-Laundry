@@ -30,13 +30,12 @@
                 <tr>
                     <td scope="row">{{ $loop->iteration }}</td>
                     <td>{{ $detail->transaksi->id }}</td>
-                    <td>{{ $detail->paket->nama }}</td>
+                    <td>{{ $detail->paket->jenis }}</td>
                     <td>{{ $detail->qty }}</td>
-                    <td>Jumlah</td>
+                    <td>Rp.{{ number_format($detail->qty * $detail->paket->harga, 0, '.', '.') }}</td>
                     <td>
                         <div class="d-flex">
                             <a href="{{ route('transaksi.edit_detail', $detail->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
-                            <a href="{{ route('detail.show', $detail->id) }}" class="btn btn-sm btn-primary mr-2">Detail</a>
                             <form action="{{ route('transaksi.destroy_detail', $detail->id) }}" method="post">
                                 @csrf
                                 @method('delete')

@@ -6,6 +6,7 @@ use App\DetailTransaksi;
 use App\Exports\TransaksiExport;
 use App\Member;
 use App\Paket;
+use App\Role;
 use App\Transaksi;
 use App\User;
 use Carbon\Carbon;
@@ -15,6 +16,13 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class TransaksiController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR, Role::ROLE_OWNER])])->only(['index', 'export']);
+        $this->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])])->except(['index', 'export']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -83,12 +91,8 @@ class TransaksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        $details = DetailTransaksi::all();
-        $transaksis = Transaksi::all();
-        $pakets = Paket::all();
-        return view('transaksi.detail', compact('details', 'transaksis', 'pakets'));
     }
 
     /**
@@ -148,6 +152,16 @@ class TransaksiController extends Controller
         return Excel::download(new TransaksiExport($data), 'transaksi.xlsx');
     }
 
+    public function index_detail($id_transaksi)
+    {
+
+
+        $details = DetailTransaksi::where('id_transaksi', $id_transaksi)->get();
+        $transaksis = Transaksi::all();
+        $pakets = Paket::all();
+        return view('transaksi.detail', compact('details', 'transaksis', 'pakets'));
+    }
+
     public function create_detail()
     {
         $transaksis = Transaksi::all();
@@ -170,6 +184,41 @@ class TransaksiController extends Controller
         $detailtransaksi->id_paket = $request->id_paket;
         $detailtransaksi->qty = $request->qty;
 
-        return redirect()->route('transaksi.show')->with('message', 'Detail Added successfully!');
+        $detailtransaksi->save();
+
+        return redirect()->route('transaksi.index_detail', $request->id_transaksi)->with('message', 'Detail Added successfully!');
+    }
+
+    public function edit_detail($id)
+    {
+        $detailtransaksi = DetailTransaksi::findOrFail($id);
+        $paket = Paket::all();
+        return view('transaksi.editdetail', compact('detailtransaksi', 'paket'));
+    }
+
+    public function update_detail(Request $request, $id)
+    {
+        $detailtransaksi = DetailTransaksi::findorFail($id);
+        $request->validate([
+            'id_paket' => 'required|exists:pakets,id',
+            'qty' => 'required',
+
+        ]);
+
+        $detailtransaksi->id_paket = $request->id_paket;
+        $detailtransaksi->qty = $request->qty;
+
+        $detailtransaksi->save();
+
+        return redirect()->back()->with('message', 'Detail Updated successfully!');
+    }
+
+    public function destroy_detail($id)
+    {
+
+        $detailtransaksi = DetailTransaksi::findorFail($id);
+        $detailtransaksi->delete();
+
+        return redirect()->back()->with('message', 'Detail Deleted successfully!');
     }
 }
