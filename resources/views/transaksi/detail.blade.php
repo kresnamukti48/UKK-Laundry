@@ -20,32 +20,45 @@
                 <th>No</th>
                 <th>Nomer Transaksi</th>
                 <th>Nama Paket</th>
+                <th>Harga</th>
                 <th>Jumlah</th>
-                <th>Total Bayar</th>
+                <th>Total</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
+            <?php
+            $total_bayar = 0;
+            ?>
             @foreach ($details as $detail)
+                <?php
+                $total = $detail->paket->harga * $detail->qty;
+                ?>
                 <tr>
                     <td scope="row">{{ $loop->iteration }}</td>
                     <td>{{ $detail->transaksi->id }}</td>
                     <td>{{ $detail->paket->jenis }}</td>
+                    <td>{{ $detail->paket->harga }}</td>
                     <td>{{ $detail->qty }}</td>
-                    <td>Rp.{{ number_format($detail->qty * $detail->paket->harga, 0, '.', '.') }}</td>
+                    <td>Rp.{{ $total }}</td>
                     <td>
                         <div class="d-flex">
-                            <a href="{{ route('transaksi.edit_detail', $detail->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
-                            <form action="{{ route('transaksi.destroy_detail', $detail->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this?')">Delete</button>
-                            </form>
+                            <a href="{{ route('transaksi.edit_detail', $detail->id) }}"
+                                class="btn btn-sm btn-primary mr-2">Edit</a>
                         </div>
                     </td>
                 </tr>
+                <?php
+                $total_bayar += $total;
+                ?>
             @endforeach
         </tbody>
+        <tr>
+            <th colspan="5">
+                <center>Total bayar</center>
+            </th>
+            <th>Rp.{{ $total_bayar }}</th>
+        </tr>
     </table>
     <!-- End of Main Content -->
 @endsection

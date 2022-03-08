@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Member;
+use App\Paket;
+use App\Transaksi;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -25,9 +28,15 @@ class HomeController extends Controller
     public function index()
     {
         $users = User::count();
+        $members = Member::count();
+        $packets = Paket::count();
+        $transactions = Transaksi::count();
 
         $widget = [
             'users' => $users,
+            'members' => $members,
+            'packets' => $packets,
+            'transactions' => $transactions
             //...
         ];
 

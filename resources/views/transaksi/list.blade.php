@@ -42,13 +42,10 @@
                     <td>{{ $transaksi->user->name }}</td>
                     <td>
                         <div class="d-flex">
-                            <a href="{{ route('transaksi.edit', $transaksi->id) }}" class="btn btn-sm btn-primary mr-2">Edit</a>
-                            <a href="{{ route('transaksi.index_detail', $transaksi->id) }}" class="btn btn-sm btn-primary mr-2">Detail</a>
-                            <form action="{{ route('transaksi.destroy', $transaksi->id) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this?')">Delete</button>
-                            </form>
+                            <a href="{{ route('transaksi.edit', $transaksi->id) }}"
+                                class="btn btn-sm btn-primary mr-2">Edit</a>
+                            <a href="{{ route('transaksi.index_detail', $transaksi->id) }}"
+                                class="btn btn-sm btn-primary mr-2">Detail</a>
                         </div>
                     </td>
                 </tr>

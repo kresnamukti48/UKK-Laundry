@@ -1,7 +1,7 @@
   <!-- Nav Item - Transaksi -->
-  <li class="nav-item {{ Nav::isRoute('transkasi.index') }}">
-    <a class="nav-link" href="{{ route('transaksi.index') }}">
-        <i class="fas fa-fw fa-plus"></i>
-        <span>{{ __('Transaksi') }}</span>
-    </a>
-</li>
+  <li class="nav-item {{ Nav::isRoute('transaksi.index_owner') }}">
+      <a class="nav-link" href="{{ route('transaksi.index_owner') }}">
+          <i class="fas fa-fw fa-plus"></i>
+          <span>{{ __('Transaksi Owner') }}</span>
+      </a>
+  </li>

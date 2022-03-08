@@ -37,12 +37,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('basic', BasicController::class)->middleware(['role:' . Role::ROLE_ADMIN]);
     Route::resource('member', MemberController::class)->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
     Route::resource('paket', PaketController::class)->middleware(['role:' . Role::ROLE_ADMIN]);
-    Route::get('transaksi/export', 'TransaksiController@export')->name('transaksi.export');
+    Route::get('transaksi/export', 'TransaksiController@export')->name('transaksi.export')->middleware('role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR, Role::ROLE_OWNER]));
+    Route::get('transaksi/index_owner', 'TransaksiController@index_owner')->name('transaksi.index_owner')->middleware(['role:' . Role::ROLE_OWNER]);
     Route::get('transaksi/index_detail/{id_transaksi}', 'TransaksiController@index_detail')->name('transaksi.index_detail')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
     Route::get('transaksi/create_detail', 'TransaksiController@create_detail')->name('transaksi.create_detail')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
     Route::get('transaksi/edit_detail/{id}', 'TransaksiController@edit_detail')->name('transaksi.edit_detail')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
     Route::post('transaksi/store_detail', 'TransaksiController@store_detail')->name('transaksi.store_detail')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
-    Route::post('transaksi/update_detail', 'TransaksiController@update_detail')->name('transaksi.update_detail')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
+    Route::put('transaksi/update_detail/{id}', 'TransaksiController@update_detail')->name('transaksi.update_detail')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
     Route::delete('transaksi/destroy_detail/{id}', 'TransaksiController@destroy_detail')->name('transaksi.destroy_detail')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
-    Route::resource('transaksi', TransaksiController::class);
+    Route::resource('transaksi', TransaksiController::class)->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
 });

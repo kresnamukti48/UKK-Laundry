@@ -16,7 +16,7 @@
                     <label for="paket">Nama Paket</label>
                     <select name="id_paket" class="form-control" @error('id_paket') is-invalid @enderror>
                       @foreach ($paket as $item)
-                      <option value="{{old('id_paket', $detailtransaksi->id_paket) == $item->id ? 'selected' : null}}">{{$item->jenis}}</option>
+                      <option value="{{$item->id}}">{{$item->jenis}}</option>
                       @endforeach
                     </select>
                     @error('id_paket')<div class="invalid-feedback">{{ $message }}</div>@enderror

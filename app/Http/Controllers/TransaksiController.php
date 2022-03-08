@@ -17,11 +17,6 @@ use Maatwebsite\Excel\Facades\Excel;
 class TransaksiController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR, Role::ROLE_OWNER])])->only(['index', 'export']);
-        $this->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])])->except(['index', 'export']);
-    }
 
     /**
      * Display a listing of the resource.
@@ -186,7 +181,7 @@ class TransaksiController extends Controller
 
         $detailtransaksi->save();
 
-        return redirect()->route('transaksi.index_detail', $request->id_transaksi)->with('message', 'Detail Added successfully!');
+        return redirect()->route('transaksi.index')->with('message', 'Detail added successfully!');
     }
 
     public function edit_detail($id)
@@ -198,7 +193,7 @@ class TransaksiController extends Controller
 
     public function update_detail(Request $request, $id)
     {
-        $detailtransaksi = DetailTransaksi::findorFail($id);
+        $detailtransaksi = DetailTransaksi::findOrFail($id);
         $request->validate([
             'id_paket' => 'required|exists:pakets,id',
             'qty' => 'required',
@@ -207,10 +202,10 @@ class TransaksiController extends Controller
 
         $detailtransaksi->id_paket = $request->id_paket;
         $detailtransaksi->qty = $request->qty;
-
         $detailtransaksi->save();
 
-        return redirect()->back()->with('message', 'Detail Updated successfully!');
+
+        return redirect()->route('transaksi.index')->with('message', 'Detail update successfully!');
     }
 
     public function destroy_detail($id)
@@ -220,5 +215,13 @@ class TransaksiController extends Controller
         $detailtransaksi->delete();
 
         return redirect()->back()->with('message', 'Detail Deleted successfully!');
+    }
+
+    public function index_owner()
+    {
+        $transaksis = Transaksi::all();
+        $members = Member::orderBy('nama')->get();
+        $users = User::all();
+        return view('transaksi.owner', compact('transaksis', 'members', 'users'));
     }
 }
