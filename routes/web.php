@@ -38,7 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('member', MemberController::class)->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
     Route::resource('paket', PaketController::class)->middleware(['role:' . Role::ROLE_ADMIN]);
     Route::get('transaksi/export', 'TransaksiController@export')->name('transaksi.export')->middleware('role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR, Role::ROLE_OWNER]));
+    Route::get('transaksi/print/{id_transaksi}', 'TransaksiController@print')->name('transaksi.print')->middleware('role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR]));
+    Route::post('transaksi/cari', 'TransaksiController@cari')->name('transaksi.cari')->middleware('role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR]));
     Route::get('transaksi/index_owner', 'TransaksiController@index_owner')->name('transaksi.index_owner')->middleware(['role:' . Role::ROLE_OWNER]);
+    Route::post('transaksi/cari_owner', 'TransaksiController@cari_owner')->name('transaksi.cari_owner')->middleware(['role:' . Role::ROLE_OWNER]);
     Route::get('transaksi/index_detail/{id_transaksi}', 'TransaksiController@index_detail')->name('transaksi.index_detail')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
     Route::get('transaksi/create_detail', 'TransaksiController@create_detail')->name('transaksi.create_detail')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);
     Route::get('transaksi/edit_detail/{id}', 'TransaksiController@edit_detail')->name('transaksi.edit_detail')->middleware(['role:' . implode('|', [Role::ROLE_ADMIN, Role::ROLE_KASIR])]);

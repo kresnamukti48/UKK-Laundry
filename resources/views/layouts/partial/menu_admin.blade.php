@@ -22,19 +22,13 @@
             </a>
         </li>
 
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
         <!-- Nav Item - Transaksi -->
         <li class="nav-item {{ Nav::isRoute('transkasi.index') }}">
             <a class="nav-link" href="{{ route('transaksi.index') }}">
-                <i class="fas fa-fw fa-plus"></i>
+                <i class="fas fa-fw fa-dollar-sign"></i>
                 <span>{{ __('Transaksi') }}</span>
-            </a>
-        </li>
-
-
-        <!-- Nav Item - About -->
-        <li class="nav-item {{ Nav::isRoute('about') }}">
-            <a class="nav-link" href="{{ route('about') }}">
-                <i class="fas fa-fw fa-hands-helping"></i>
-                <span>{{ __('About') }}</span>
             </a>
         </li>

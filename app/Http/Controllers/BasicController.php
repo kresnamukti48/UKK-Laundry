@@ -50,7 +50,7 @@ class BasicController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        $user->syncRoles(Role::ROLE_KASIR);
+        $user->syncRoles(Role::ROLE_ADMIN);
 
 
 
@@ -58,16 +58,7 @@ class BasicController extends Controller
         return redirect()->route('basic.index')->with('message', 'User added successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.

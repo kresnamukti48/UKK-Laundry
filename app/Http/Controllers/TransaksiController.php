@@ -9,9 +9,11 @@ use App\Paket;
 use App\Role;
 use App\Transaksi;
 use App\User;
+use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TransaksiController extends Controller
@@ -80,15 +82,6 @@ class TransaksiController extends Controller
         return redirect()->route('transaksi.index')->with('message', 'Transaksi added successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -152,9 +145,11 @@ class TransaksiController extends Controller
 
 
         $details = DetailTransaksi::where('id_transaksi', $id_transaksi)->get();
-        $transaksis = Transaksi::all();
+        $transaksis = Transaksi::where('id', $id_transaksi)->get();
         $pakets = Paket::all();
-        return view('transaksi.detail', compact('details', 'transaksis', 'pakets'));
+        $members = Member::all();
+        $users = User::all();
+        return view('transaksi.detail', compact('details', 'transaksis', 'pakets', 'members', 'users'));
     }
 
     public function create_detail()
@@ -175,9 +170,15 @@ class TransaksiController extends Controller
 
         $detailtransaksi = new DetailTransaksi();
 
+
         $detailtransaksi->id_transaksi = $request->id_transaksi;
         $detailtransaksi->id_paket = $request->id_paket;
+
+        $paket = Paket::where('id', $detailtransaksi->id_paket)->first();
+
         $detailtransaksi->qty = $request->qty;
+        $detailtransaksi->total = $detailtransaksi->qty * $paket->harga;
+
 
         $detailtransaksi->save();
 
@@ -201,7 +202,10 @@ class TransaksiController extends Controller
         ]);
 
         $detailtransaksi->id_paket = $request->id_paket;
+
+        $paket = Paket::where('id', $detailtransaksi->id_paket)->first();
         $detailtransaksi->qty = $request->qty;
+        $detailtransaksi->total = $detailtransaksi->qty * $paket->harga;
         $detailtransaksi->save();
 
 
@@ -222,6 +226,44 @@ class TransaksiController extends Controller
         $transaksis = Transaksi::all();
         $members = Member::orderBy('nama')->get();
         $users = User::all();
+        return view('transaksi.owner', compact('transaksis', 'members', 'users'));
+    }
+
+    public function print($id_transaksi)
+    {
+        $details = DetailTransaksi::where('id_transaksi', $id_transaksi)->get();
+
+        $pdf = PDF::loadview('transaksi.print', compact('details'))->setPaper('letter', 'potrait');
+        return $pdf->stream('struk');
+    }
+
+    public function cari(Request $request)
+    {
+
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+
+        $transaksis = Transaksi::query()->select()
+            ->whereBetween('tgl', [$startDate, $endDate])
+            ->get();
+        $members = Member::orderBy('nama')->get();
+        $users = User::all();
+
+        return view('transaksi.list', compact('transaksis', 'members', 'users'));
+    }
+
+    public function cari_owner(Request $request)
+    {
+
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+
+        $transaksis = Transaksi::query()->select()
+            ->whereBetween('tgl', [$startDate, $endDate])
+            ->get();
+        $members = Member::orderBy('nama')->get();
+        $users = User::all();
+
         return view('transaksi.owner', compact('transaksis', 'members', 'users'));
     }
 }

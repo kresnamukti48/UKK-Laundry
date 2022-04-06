@@ -6,7 +6,7 @@
 
     <!-- Main Content goes here -->
 
-    <a href="{{ route('member.create') }}" class="btn btn-primary mb-3">New User</a>
+    <a href="{{ route('member.create') }}" class="btn btn-primary mb-3">New Member</a>
 
     @if (session('message'))
         <div class="alert alert-success">
@@ -38,7 +38,8 @@
                             <form action="{{ route('member.destroy', $member->id) }}" method="post">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this?')">Delete</button>
+                                <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Are you sure to delete this?')">Delete</button>
                             </form>
                         </div>
                     </td>

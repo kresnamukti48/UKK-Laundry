@@ -5,9 +5,34 @@
     <h1 class="h3 mb-4 text-gray-800">{{ $title ?? __('Transaksi') }}</h1>
 
     <!-- Main Content goes here -->
+    <form action="{{ route('transaksi.cari') }}" method="POST">
+        @csrf
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="container-fluid">
+                    <div class="form-group row">
+                        <label for="date" class="col-form-label col-sm-2">Mulai Tanggal</label>
+                        <div class="col-sm-3">
+                            <input type="date" class="form-control input-sm" name="startDate" id="startDate" required>
+                        </div>
+                        <label for="date" class="col-form-label col-sm-2">Sampai Tanggal</label>
+                        <div class="col-sm-3">
+                            <input type="date" class="form-control input-sm" name="endDate" id="endDate" required>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" name="search" title="Search" class="btn btn-primary mb-3">Cari</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
     <a href="{{ route('transaksi.create') }}" class="btn btn-primary mb-3">New Transaksi</a>
     <a href="{{ route('transaksi.export') }}" class="btn btn-success mb-3">Export</a>
+
+
 
     @if (session('message'))
         <div class="alert alert-success">

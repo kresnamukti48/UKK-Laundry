@@ -77,18 +77,22 @@
 }
 
 .img1{
-    margin-top: 50px;
-    margin-left: 15px;
+    margin-top: 80px;
+    margin-left: -40px;
 }
 
 .abt{
     text-align: center;
+    font-family: 'Rubik', sans-serif;
+    margin-left: 20px;
+    padding-top: 10px;
+    padding-right: 80px;
 }
 
-.abt p{
+/* .abt p{
     text-align: center;
     font-family: 'Rubik', sans-serif;
-}
+} */
 
 .abt a{
     text-align: center;
@@ -194,6 +198,7 @@ footer{
 
     .ml{
         margin-left: auto;
+        font-family: 'PT Sans', sans-serif;
     }
     .navbar-brand, .nav-link{
         color: white !important;
@@ -260,6 +265,10 @@ footer{
         font-family: 'Arvo', serif;
          text-transform: uppercase;
         /* text-shadow: 1px 1px 1px rgba(0, 0, 0, 1); */
+    }
+
+    .title h1{
+        margin-top: -50px;
     }
 
     .img1{

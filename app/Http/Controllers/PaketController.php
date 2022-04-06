@@ -51,16 +51,7 @@ class PaketController extends Controller
         return redirect()->route('paket.index')->with('message', 'Paket added successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.

@@ -33,7 +33,7 @@
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
                     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
                     crossorigin="anonymous">
-                <!--Replace with your tailwind.css once created-->
+
                 <link rel="stylesheet" href="css/style.css">
 
                 <!-- font -->
@@ -41,6 +41,8 @@
                 <link
                     href="https://fonts.googleapis.com/css2?family=Arvo&family=Josefin+Sans:wght@600&family=Karla:wght@500&family=Lobster&family=Overpass:wght@300&display=swap"
                     rel="stylesheet">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
 
                 <link href="{{ asset('img/logo.png') }}" rel="icon" type="image/png">
 
@@ -52,7 +54,7 @@
                 <!-- NAVBAR -->
                 <nav class="navbar navbar-expand-lg navbar-light fixed-top bgcolor">
                     <div class="container">
-                        <a class="navbar-brand" href="#">Laundry</a>
+                        <a class="navbar-brand" href="#">LaundryKu</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -61,6 +63,7 @@
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav ml">
                                 <a class="nav-link active" aria-current="page" href="#welcome">Home</a>
+                                <a class="nav-link" href="#about">About</a>
                                 <a class="nav-link btn btn-primary tombol shadow" href="login">Login</a>
                             </div>
                         </div>
@@ -74,8 +77,34 @@
                         <div class="container">
                             <h1 class="display-4">LaundryKu </h1>
                             <p class="p">
-                                Let’s get wet, tumble around, and dry off, together.
+                                Let's get wet, tumble around, and dry off, together.
                             </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="about">
+                    <div class="hero1 tronabt">
+                        <div class="container">
+                            <div>
+                                <h1>about creator</h1>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <img src="../img/kresna.jpg" alt="" width="70%" height="70%"
+                                        class="img-fluid rounded-circle img1">
+                                </div>
+                                <div class="col">
+                                    <div class="abt">
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nulla, natus,
+                                            quos iusto dolor vel aspernatur porro quis dolorem ex odit odio
+                                            necessitatibus numquam corrupti nam labore beatae suscipit facere obcaecati
+                                            commodi? Consequatur voluptate possimus modi in rerum aspernatur, labore
+                                            sint laborum ratione quae. Voluptates, placeat. Impedit dignissimos enim
+                                            dolores!</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -87,10 +116,10 @@
                         <h3>Laundry</h3>
                         <p>Bersihkan Pakaianmu!</p>
                         <ul class="socials">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-whatsapp"></i></a></li>
-                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="https://www.facebook.com/rexsa.zxa/"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="https://api.whatsapp.com/send/?phone=6282257534227&text&app_absent=0"><i
+                                        class="fa fa-whatsapp"></i></a></li>
+                            <li><a href="https://www.instagram.com/kresn.mw/"><i class="fa fa-instagram"></i></a></li>
                         </ul>
                     </div>
                     <div class="footer-bottom container">
@@ -108,9 +137,9 @@
 
                     window.addEventListener('scroll', function() {
                         if (window.pageYOffset > 100) {
-                            nav.classList.add('bg-black', 'shadow');
+                            nav.classList.add('bg-dark', 'shadow');
                         } else {
-                            nav.classList.remove('bg-black', 'shadow')
+                            nav.classList.remove('bg-dark', 'shadow')
                         }
                     })
                 </script>
